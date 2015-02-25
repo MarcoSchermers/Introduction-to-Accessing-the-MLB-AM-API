@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!--
+    Micheal Willard
+    CS 290-400
+    Winter 2015
+    -->
+    <title>MLB Advanced Media Example</title>
+    <script src='mlb_am_api.js'></script>
+    <!--<link rel="stylesheet" type="text/css" href="XXX/XXX.css"/>-->
+  </head>
+  <body>
+  <div id ='output'></div>
+  <section>
+    <h5>Create a New Sport</h5>
+    <div>
+      <label>Name</label>
+      <input type='text' name='sport-name'>
+    </div>
+    <div>
+      <label>Minimum Temp</label>
+      <input type='number' name='sport-min-temp'>
+    </div>
+    <div>
+      <label>Maximum Temp</label>
+      <input type='number' name='sport-max-temp'>
+    </div>
+    <div>
+      <label>Acceptable Chance of Rain</label>
+      <input type='number' name='sport-max-rain'>
+    </div>
+    <div>
+      <input type='button' value='Save Sport' onclick='saveSport()'>
+    </div>
+  </section>
+  <section>
+    <h5>City Selection</h5>
+    <select name='city-select'>
+      <option value='Salem,Or'>Salem</option>
+      <option value='Corvallis,Or'>Corvallis</option>
+    </select>
+  </section>
+  <section>
+    <ul id='sport-list'>
+    </ul>
+  </section>
+
+
+  </body>
+</html>
