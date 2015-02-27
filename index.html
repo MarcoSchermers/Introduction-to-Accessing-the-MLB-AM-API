@@ -29,37 +29,38 @@
     <div class="blog-masthead">
       <div class="container">
         <nav class="blog-nav">
-          <a class="blog-nav-item active" href="#">Home</a>
-          <a class="blog-nav-item" href="#">New features</a>
-          <a class="blog-nav-item" href="#">Press</a>
-          <a class="blog-nav-item" href="#">New hires</a>
+          <a class="blog-nav-item active" href="index.html">Home</a>
           <a class="blog-nav-item" href="#">About</a>
         </nav>
       </div>
     </div>
-
-    <!-- **********BREAK*********-->
-
     <div class="container">
-
       <div class="blog-header">
-        <h1 class="blog-title">Introduction to Accessing the MLBAM API</h1>
+        <h1 class="blog-title">Introduction to Accessing the MLB AM API</h1>
         <p class="lead blog-description">by Micheal Willard</p>
       </div>
-
       <div class="row">
-
         <div class="col-sm-8 blog-main">
-
           <div class="blog-post">
             <h2 class="blog-post-title">About the API</h2>
             <hr>
             <p>
-              MLB Advanced Media provides an open and accesible API which tracks all the dtata and statistics of each game played going back to 1909.  The API also stores data which feeds into the MLB Gameday Application as well as their websites.  The information accessed form the API in those applications also includes links to video feeds, highlights and other items in addition to statistics.
+              MLB Advanced Media provides an open and accesible API which tracks all the dtata and statistics of each game played going back to 1909.  The API also stores data which feeds into the MLB Gameday Application as well as the MLB websites.  The information accessed form the API in those applications also includes links to video feeds, highlights and other items in addition to statistics.
             </p>
-            <p>The base URL is:</p>
+            <p>
+              This How-To will walk the you through the following items:
+            </p>
+            <p>
+              <ul>
+                <li>Section 1: The API Structure</li>
+                <li>Section 2: The Date Level Folder</li>
+                <li>Section 3: The Scoreboard JSONs</li>
+                <li>Section 4: Accessing the Scoreboard Data Using Javascript</li>
+                <li>Section 5: A Scoreboard Example Using Javascript</li>
+              </ul>
+            <p>The MLB AM API can be accessed through this base URL is:</p>
             <pre><code>http://gd2.mlb.com/components/game/mlb/</code></pre>
-            <p>If you visit this <a href="http://gd2.mlb.com/components/game/mlb/">link</a> you can view the structure set up as series of URL links laid out in a folder hierarchy.
+            <p>If you visit this <a href="http://gd2.mlb.com/components/game/mlb/">the MLB AM API URL</a> you can view the structure set up as series of URL links laid out in a folder hierarchy.
             </p>
             <p>
               The basic structure begins with the base URL and then trees down first by year, then month then date.  The format is similar to the following:
@@ -72,7 +73,9 @@
                     <li><code>day_DD/</code></li>
                   </ul>
                 </ul>
-                <pre><code>http://gd2.mlb.com/components/game/mlb/year_YYYY/month_MM/day_DD/</code></pre>
+                <pre><code>
+                  http://gd2.mlb.com/components/game/mlb/year_YYYY/month_MM/day_DD/
+                </code></pre>
             </p>
             <p>
               Once you get to this level (on a day there is a game) you can access subfolders for each game, various <b>.json</b> files and various <b>.xml</b> files.  The syntax for the subfolders are potentially the trickiest items to figure out how to properly run a routine to obtain data from them.  That syntax is as follows:
@@ -95,16 +98,16 @@
         <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
           <div class="sidebar-module sidebar-module-inset">
             <h4>About</h4>
-            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+            <p>This site offers a How-To on accessing the MLB Advanced Media Api.  The code is all done in Javascript, but PHP has similar methods which can be applied to attain the same effect if server side scripting is desired.</p>
           </div>
           <div class="sidebar-module">
             <h4>Sections</h4>
             <ol class="list-unstyled">
-              <li><a href="section1.html">Section 1 - The Date Level Folder</a></li>
-              <li><a href="section2.html">Section 2 - ??</a></li>
-              <li><a href="section3.html">Section 3 - ??</a></li>
-              <li><a href="section4.html">Section 4 - ??</a></li>
-              <li><a href="example.html">Section 4 - Example JSON</a></li>
+              <li><a href="section1.html">Section 1: The API Structure</a></li>
+              <li><a href="section2.html">Section 2: The Date Level Folder</a></li>
+              <li><a href="section3.html">Section 3: The Scoreboard JSONs</a></li>
+              <li><a href="section4.html">Section 4: Accessing the Scoreboard Data Using Javascript</a></li>
+              <li><a href="example.html">Section 5: A Scoreboard Example Using Javascript</a></li>
             </ol>
           </div>
           <div class="sidebar-module">
@@ -132,7 +135,3 @@
     <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
-
-<!-- http://gd2.mlb.com/components/game/mlb/year_2014/month_05/day_11/gid_2014_05_11_kcamlb_seamlb_1/boxscore.json -->
-
-<!-- {"hr":"0","sac":"0","name_display_first_last":"Robinson Cano","s_h":"43","s_hr":"1","s_rbi":"19","pos":"2B","id":"429664","rbi":"0","bo":"300","lob":"3","name":"Cano","avg":".295","bb":"0","fldg":"1.000","hbp":"0","d":"0","e":"0","so":"0","a":"2","s_so":"20","sf":"0","h":"1","cs":"0","s_bb":"13","s_r":"16","t":"0","ao":"3","r":"0","sb":"0","po":"1","ab":"4"} -->

@@ -12,8 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
-    <title>MLB Advanced Media Score Board Example</title>
-    <script src='mlb_am_api.js'></script>
+    <title>MLBAM API How-To</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -43,20 +42,35 @@
       <div class="row">
         <div class="col-sm-8 blog-main">
           <div class="blog-post">
-            <h2 class="blog-post-title">Section 5: A Scoreboard Example Using Javascript</h2>
-            <h5>Baseball season is approximately the start of April (04/01) to end of October (10/30).</h5>
-            <h5>Please use the correct formatting as indicated below (MM/DD/YYYY).</h5>
-            <input type='number' name='month' min="03" max="10"/> Month (MM)<br>
-            <input type='number' name='day' min="01" max="31"/> Day (DD)<br>
-            <input type='number' name='year' min="2001" max="2014"/> Year (YY)
-            <br>
-            <div>
-              <input type='submit' value='Display Scores' onclick='getScores()'>
-            </div><br>
-            <section>
-              <ul id='scoreboard'>
-              </ul>
-            </section>
+            <h2 class="blog-post-title">Section 1: The API Structure</h2>
+            <hr>
+            <p>The base URL is:</p>
+            <pre><code>http://gd2.mlb.com/components/game/mlb/</code></pre>
+            <p>If you visit this <a href="http://gd2.mlb.com/components/game/mlb/">link</a> you can view the structure set up as series of URL links laid out in a folder hierarchy.
+            </p>
+            <p>
+              The basic structure begins with the base URL and then trees down first by year, then month then date.  The format is similar to the following:
+            </p>
+            <p>
+              <li><code>year_YYYY/</code></li>
+                <ul>
+                  <li><code>month_MM/</code></li>
+                  <ul>
+                    <li><code>day_DD/</code></li>
+                  </ul>
+                </ul>
+                <pre><code>
+                  http://gd2.mlb.com/components/game/mlb/year_YYYY/month_MM/day_DD/
+                </code></pre>
+            </p>
+            <p>
+              Once you get to this level (on a day there is a game) you can access subfolders for each game, various <b>.json</b> files and various <b>.xml</b> files.  The syntax for the subfolders are potentially the trickiest items to figure out how to properly run a routine to obtain data from them.  That syntax is as follows:
+            </p>
+            <pre><code>gid_YYYY_MM_DD_XXXmlb_YYYmlb_1/</code></pre>
+            <p>Where XXX and YYY are the static 3-letter codes for each team.<br>Ex: Seattle = sea.</p>
+            <!-- <blockquote>
+              <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+            </blockquote> -->
           </div><!-- /.blog-post -->
           <nav>
             <ul class="pager">
@@ -75,8 +89,7 @@
           <div class="sidebar-module">
             <h4>Sections</h4>
             <ol class="list-unstyled">
-              <li><a href="index.html">Home: About the API</a></li>
-              <li><a href="section1.html">Section 1: The API Structure</a></li>
+              <li><a href="section1.html">Section 1: The Structure of the API Data</a></li>
               <li><a href="section2.html">Section 2: The Date Level Folder</a></li>
               <li><a href="section3.html">Section 3: The Scoreboard JSONs</a></li>
               <li><a href="section4.html">Section 4: Accessing the Scoreboard Data Using Javascript</a></li>
