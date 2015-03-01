@@ -30,7 +30,6 @@
       <div class="container">
         <nav class="blog-nav">
           <a class="blog-nav-item active" href="index.html">Home</a>
-          <a class="blog-nav-item" href="#">About</a>
         </nav>
       </div>
     </div>
@@ -46,8 +45,6 @@
             <hr>
             <p>As discussed in the Introduction, the base URL is:</p>
             <pre><code>http://gd2.mlb.com/components/game/mlb/</code></pre>
-            <p>If you visit this <a href="http://gd2.mlb.com/components/game/mlb/">link</a> you can view the structure set up as series of URL links laid out in a folder hierarchy.
-            </p>
             <p>
               The basic structure begins with the base URL and then trees down first by year, then month then date.  The format is similar to the following:
             </p>
@@ -59,18 +56,18 @@
                     <li><code>day_DD/</code></li>
                   </ul>
                 </ul>
-                <pre><code>
-                  http://gd2.mlb.com/components/game/mlb/year_YYYY/month_MM/day_DD/
-                </code></pre>
             </p>
-
+            <p>Building the URL out from that would take us to the Date Level Folder, as mentioned in the Introduction.
+            </p>
+                <pre><code>              http://gd2.mlb.com/components/game/mlb/year_YYYY/month_MM/day_DD/</code></pre>
             <p>
-              At the year level folder you can continue on to folders for each month.  But this also contains <code>batters/</code> and <code>pitchers/</code> folders.  Within those folders are <b>.xml</b> files for each batter and pitcher that played that year.  These files can only be accessed if you have the batter's ot pitcher's ID number.  That ID number is assigned by MLB.
+              At the year level folder you can continue on to folders for each month.  But this also contains <code>batters/</code> and <code>pitchers/</code> folders.  Within those folders are <b>.xml</b> files for each batter and pitcher that played that year.  These files can only be accessed if you have the batter's or pitcher's ID number.  That ID number is assigned by MLB.
             </p>
             <p>
               Accessing these files would require a .csv (for example) file that can tie batters to their ID numbers.  There are a number of developers on Github whcih have compiled such lists, but I'm opting to not 'borrow' that data.  So this How-To will not spend a lot of time on those files.  I wanted to point them out as they are accessible and would contain relevant data depending on what you would like to do.
             </p>
-            <h3>Full Structure, Abbreviated</h3>
+            <h3>Structure</h3>
+            <h4>(Abbreviated)</h4>
               http://gd2.mlb.com/components/game/mlb/
               <ul>
                 <li>year_YYYY/</li>
@@ -152,7 +149,6 @@
             <h4>Sections</h4>
             <ol class="list-unstyled">
               <li><a href="index.html">Home: About the API</a></li>
-              <li><a href="section1.html">Section 1: The API Structure</a></li>
               <li><a href="section2.html">Section 2: The Date Level Folder</a></li>
               <li><a href="section3.html">Section 3: The Scoreboard JSONs</a></li>
               <li><a href="section4.html">Section 4: Accessing the Scoreboard Data Using Javascript</a></li>

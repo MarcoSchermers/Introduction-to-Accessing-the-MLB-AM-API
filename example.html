@@ -31,24 +31,24 @@
       <div class="container">
         <nav class="blog-nav">
           <a class="blog-nav-item active" href="index.html">Home</a>
-          <a class="blog-nav-item" href="#">About</a>
         </nav>
       </div>
     </div>
     <div class="container">
       <div class="blog-header">
-        <h1 class="blog-title">Introduction to Accessing the MLBAM API</h1>
-        <p class="lead blog-description">by Micheal Willard</p>
+        <!-- <h1 class="blog-title">Introduction to Accessing the MLBAM API</h1>
+        <p class="lead blog-description">by Micheal Willard</p> -->
       </div>
       <div class="row">
         <div class="col-sm-8 blog-main">
           <div class="blog-post">
             <h2 class="blog-post-title">Section 5: A Scoreboard Example Using Javascript</h2>
-            <h5>Baseball season is approximately the start of April (04/01) to end of October (10/30).</h5>
-            <h5>Please use the correct formatting as indicated below (MM/DD/YYYY).</h5>
+            <h4>Note:</h4>
+            <p>Baseball season is approximately the start of April (04/01) to end of October (10/30).  The Year field is set to only go back to 2001.  The Scores listed as 'Undefined' will show up for rain-outs.</p>
+            <p>Please use the correct formatting as indicated below (ex. 05/15/2014).</p>
             <input type='number' name='month' min="03" max="10"/> Month (MM)<br>
             <input type='number' name='day' min="01" max="31"/> Day (DD)<br>
-            <input type='number' name='year' min="2001" max="2014"/> Year (YY)
+            <input type='number' name='year' min="2001" max="2014"/> Year (YYYY)
             <br>
             <div>
               <input type='submit' value='Display Scores' onclick='getScores()'>
@@ -60,8 +60,8 @@
           </div><!-- /.blog-post -->
           <nav>
             <ul class="pager">
-              <li><a href="index.html">Previous</a></li>
-              <li><a href="section2.html">Next</a></li>
+              <li><a href="section4.html">Previous</a></li>
+              <!-- <li><a href="section2.html">Next</a></li> -->
             </ul>
           </nav>
 
@@ -80,7 +80,6 @@
               <li><a href="section2.html">Section 2: The Date Level Folder</a></li>
               <li><a href="section3.html">Section 3: The Scoreboard JSONs</a></li>
               <li><a href="section4.html">Section 4: Accessing the Scoreboard Data Using Javascript</a></li>
-              <li><a href="example.html">Section 5: A Scoreboard Example Using Javascript</a></li>
             </ol>
           </div>
           <div class="sidebar-module">

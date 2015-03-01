@@ -1,4 +1,4 @@
-http://www.w3schools.com/json/json_http.asp
+// http://www.w3schools.com/json/json_http.asp
 
 function Game() {
   this.homeTeam = '';
@@ -34,11 +34,9 @@ function Game() {
 }
 
 function createScoreboard(scoreTable, response) {
-  console.log('Create Scoreboard Called');
   var obj = response.data.games.game;
   for (var key in obj) {
       var tempItem = new Game();
-      // Set a 'no games message here'?
       tempItem.setHomeTeam(obj[key].home_team_name);
       tempItem.setAwayTeam(obj[key].away_team_name);
       tempItem.setHomeScore(obj[key].home_team_runs);
@@ -85,6 +83,8 @@ function tableObject(scoreTable, tempItem) {
 }
 
 function getScores() {
+  var emptyNode = document.getElementById('scoreboard');
+  emptyNode.innerHTML = '';
   var req = new XMLHttpRequest();
   if(!req) {
     throw 'Unable to create HttpRequest.';

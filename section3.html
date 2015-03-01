@@ -30,52 +30,169 @@
       <div class="container">
         <nav class="blog-nav">
           <a class="blog-nav-item active" href="index.html">Home</a>
-          <a class="blog-nav-item" href="#">About</a>
         </nav>
       </div>
     </div>
     <div class="container">
       <div class="blog-header">
-        <h1 class="blog-title">Introduction to Accessing the MLBAM API</h1>
-        <p class="lead blog-description">by Micheal Willard</p>
+        <!-- <h1 class="blog-title">Introduction to Accessing the MLBAM API</h1>
+        <p class="lead blog-description">by Micheal Willard</p> -->
       </div>
       <div class="row">
         <div class="col-sm-8 blog-main">
           <div class="blog-post">
-            <h2 class="blog-post-title">Section 1: The API Structure</h2>
+            <h2 class="blog-post-title">Section 3: The Scoreboard JSONs</h2>
             <hr>
-            <p>The base URL is:</p>
-            <pre><code>http://gd2.mlb.com/components/game/mlb/</code></pre>
-            <p>If you visit this <a href="http://gd2.mlb.com/components/game/mlb/">link</a> you can view the structure set up as series of URL links laid out in a folder hierarchy.
+            <h3>The "miniscoreboard"</h3>
+            <p>
+              As we saw in Section 2, there are a number of Scoreboard files available in different formats.  For this How-To, I'm going to focus on the <a href="http://gd2.mlb.com/components/game/mlb/year_2014/month_07/day_30/miniscoreboard.xml"><b>minscoreboard.json/xml</b></a>.  However, the attributes for <b>"game"</b> is very similar for the other scoreboard formats.
             </p>
             <p>
-              The basic structure begins with the base URL and then trees down first by year, then month then date.  The format is similar to the following:
+              The <b>minscoreboard</b> starts out with a few levels before you can get to game info.  It trees down in the following way:
+              <p><b>"data": -> "games": -> "game":</b>.
+              </p>
+              <p>
+                Once you get to the <b>"game"</b> attribute, you can then access data for each individual game.
             </p>
             <p>
-              <li><code>year_YYYY/</code></li>
-                <ul>
-                  <li><code>month_MM/</code></li>
-                  <ul>
-                    <li><code>day_DD/</code></li>
-                  </ul>
-                </ul>
-                <pre><code>
-                  http://gd2.mlb.com/components/game/mlb/year_YYYY/month_MM/day_DD/
-                </code></pre>
+              I'm linking mostly to <b>.xml</b> files due to the formatting being easier to read in the browser.  However, the example later in this guide will utilized a call to the <b>.json</b> file.  The <b>.json</b> in the browser window will show up as a mess of text, so try this <a href="http://www.freeformatter.com/json-formatter.html">formatter</a> to get the <b>.json</b> string into a more legible format.
             </p>
             <p>
-              Once you get to this level (on a day there is a game) you can access subfolders for each game, various <b>.json</b> files and various <b>.xml</b> files.  The syntax for the subfolders are potentially the trickiest items to figure out how to properly run a routine to obtain data from them.  That syntax is as follows:
+              Below, I have posted a snippet of the <b>miniscoreboard.json</b> for <a href="http://gd2.mlb.com/components/game/mlb/year_2014/month_05/day_15/">March 15th, 2014</a>.  This is just one game of the 10 games played that day.  As you can see, the <b>.json</b> string is incredibly long for each game and contains a ton of information.
             </p>
-            <pre><code>gid_YYYY_MM_DD_XXXmlb_YYYmlb_1/</code></pre>
-            <p>Where XXX and YYY are the static 3-letter codes for each team.<br>Ex: Seattle = sea.</p>
-            <!-- <blockquote>
-              <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-            </blockquote> -->
+            <p>
+              When we start looking at it we can see <code>"home_team_name": "Reds",</code> indicates that the <b>Cincinnati Reds</b> were the <b>Home Team</b> for this game and <code>"away_team_name": "Padres",</code> indicates that the <b>San Diego Padres</b> were the <b>Away Team</b> for this game.  The name convention for each attribute is pretty straightforward in this file as well as for all the files in the API.
+            </p>
+            <h3>Example JSON</h3>
+            <p>Look at all this fun information that can be used to build a scoreboard!</p>
+            <pre><code>
+              {
+                "subject": "miniscoreboard_mlb_2014_05_15",
+                "copyright": "Copyright 2014 MLB Advanced Media, L.P.  Use of any content on this page acknowledges agreement to the terms posted here http://gdx.mlb.com/components/copyright.txt",
+                "data": {
+                  "games": {
+                    "last_modified": "",
+                    "game": [
+                      {
+                        "home_team_runs": "5",
+                        "preview_link": "/mlb/gameday/index.jsp?gid=2014_05_15_sdnmlb_cinmlb_1&mode=preview&c_id=mlb",
+                        "game_type": "R",
+                        "double_header_sw": "S",
+                        "away_time": "9:35",
+                        "away_preview_link": "/mlb/gameday/index.jsp?gid=2014_05_15_sdnmlb_cinmlb_1&mode=preview&c_id=mlb",
+                        "away_audio_link": "bam.media.launchPlayer({calendar_event_id:'14-381152-2014-05-15',media_type:'audio'})",
+                        "time": "12:35",
+                        "top_inning": "Y",
+                        "home_time": "12:35",
+                        "home_team_sb": "0",
+                        "home_team_name": "Reds",
+                        "away_team_hr": "0",
+                        "ind": "F",
+                        "original_date": "2014/05/15",
+                        "home_team_city": "Cincinnati",
+                        "venue_id": "2602",
+                        "home_team_so": "8",
+                        "gameday_sw": "P",
+                        "away_win": "19",
+                        "home_games_back_wildcard": "2.5",
+                        "away_team_id": "135",
+                        "tz_hm_lg_gen": "ET",
+                        "status": "Final",
+                        "home_loss": "20",
+                        "home_games_back": "7.0",
+                        "home_code": "cin",
+                        "away_sport_code": "mlb",
+                        "home_team_hr": "1",
+                        "home_win": "18",
+                        "time_hm_lg": "12:35",
+                        "away_name_abbrev": "SD",
+                        "league": "NN",
+                        "time_zone_aw_lg": "-4",
+                        "away_games_back": "6.5",
+                        "home_file_code": "cin",
+                        "game_data_directory": "/components/game/mlb/year_2014/month_05/day_15/gid_2014_05_15_sdnmlb_cinmlb_1",
+                        "time_zone": "ET",
+                        "away_league_id": "104",
+                        "home_team_id": "113",
+                        "time_aw_lg": "12:35",
+                        "away_team_city": "San Diego",
+                        "day": "THU",
+                        "tbd_flag": "N",
+                        "tz_aw_lg_gen": "ET",
+                        "away_code": "sdn",
+                        "game_media": {
+                          "media": [
+                            {
+                              "free": "NO",
+                              "title": "SD @ CIN",
+                              "thumbnail": "http://mediadownloads.mlb.com/mlbam/preview/sdncin_381152_th_7_preview.jpg",
+                              "media_state": "media_archive",
+                              "start": "2014-05-15T12:35:00-0400",
+                              "has_mlbtv": "true",
+                              "calendar_event_id": "14-381152-2014-05-15",
+                              "type": "game"
+                            },
+                            {
+                              "headline": "Cueto goes the distance",
+                              "thumbnail": "http://mediadownloads.mlb.com/mlbam/2014/05/15/images/mlbf_32892289_th_7.jpg",
+                              "content_id": "32892289",
+                              "topic_id": "",
+                              "type": "vpp"
+                            }
+                          ]
+                        },
+                        "game_nbr": "1",
+                        "time_date_aw_lg": "2014/05/15 12:35",
+                        "away_team_sb": "0",
+                        "away_games_back_wildcard": "2.0",
+                        "scheduled_innings": "9",
+                        "venue_w_chan_loc": "USOH0188",
+                        "away_team_so": "6",
+                        "away_team_name": "Padres",
+                        "gameday_link": "2014_05_15_sdnmlb_cinmlb_1",
+                        "outs": "3",
+                        "time_date_hm_lg": "2014/05/15 12:35",
+                        "id": "2014/05/15/sdnmlb-cinmlb-1",
+                        "home_name_abbrev": "CIN",
+                        "wrapup_link": "/mlb/gameday/index.jsp?gid=2014_05_15_sdnmlb_cinmlb_1&mode=wrap&c_id=mlb",
+                        "tiebreaker_sw": "N",
+                        "ampm": "PM",
+                        "home_division": "C",
+                        "home_time_zone": "ET",
+                        "tv_station": "FS1",
+                        "away_team_errors": "0",
+                        "away_team_runs": "0",
+                        "mlbtv_link": "bam.media.launchPlayer({calendar_event_id:'14-381152-2014-05-15',media_type:'video'})",
+                        "away_time_zone": "PT",
+                        "home_audio_link": "bam.media.launchPlayer({calendar_event_id:'14-381152-2014-05-15',media_type:'audio'})",
+                        "hm_lg_ampm": "PM",
+                        "home_sport_code": "mlb",
+                        "time_date": "2014/05/15 12:35",
+                        "inning": "9",
+                        "home_team_hits": "14",
+                        "home_ampm": "PM",
+                        "game_pk": "381152",
+                        "venue": "Great American Ball Park",
+                        "home_league_id": "104",
+                        "away_team_hits": "3",
+                        "away_loss": "22",
+                        "home_team_errors": "0",
+                        "away_file_code": "sd",
+                        "aw_lg_ampm": "PM",
+                        "home_preview_link": "/mlb/gameday/index.jsp?gid=2014_05_15_sdnmlb_cinmlb_1&mode=preview&c_id=mlb",
+                        "time_zone_hm_lg": "-4",
+                        "away_ampm": "AM",
+                        "away_division": "W"
+                      },
+                    </code></pre>
+
+
+
           </div><!-- /.blog-post -->
           <nav>
             <ul class="pager">
-              <li><a href="index.html">Previous</a></li>
-              <li><a href="section2.html">Next</a></li>
+              <li><a href="section2.html">Previous</a></li>
+              <li><a href="section4.html">Next</a></li>
             </ul>
           </nav>
 
@@ -89,9 +206,9 @@
           <div class="sidebar-module">
             <h4>Sections</h4>
             <ol class="list-unstyled">
+              <li><a href="index.html">Home: About the API</a></li>
               <li><a href="section1.html">Section 1: The Structure of the API Data</a></li>
               <li><a href="section2.html">Section 2: The Date Level Folder</a></li>
-              <li><a href="section3.html">Section 3: The Scoreboard JSONs</a></li>
               <li><a href="section4.html">Section 4: Accessing the Scoreboard Data Using Javascript</a></li>
               <li><a href="example.html">Section 5: A Scoreboard Example Using Javascript</a></li>
             </ol>

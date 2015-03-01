@@ -13,7 +13,6 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
     <title>MLBAM API How-To</title>
-
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
@@ -30,7 +29,6 @@
       <div class="container">
         <nav class="blog-nav">
           <a class="blog-nav-item active" href="index.html">Home</a>
-          <a class="blog-nav-item" href="#">About</a>
         </nav>
       </div>
     </div>
@@ -42,20 +40,32 @@
       <div class="row">
         <div class="col-sm-8 blog-main">
           <div class="blog-post">
-            <h2 class="blog-post-title">Section 2: The Day Level Folder</h2>
+            <h2 class="blog-post-title">Section 2: The Date Level Folder</h2>
             <hr>
-                <pre><code>
-                  http://gd2.mlb.com/components/game/mlb/year_YYYY/month_MM/day_DD/
-                </code></pre>
-            </p>
+            <h3>Scoreboards</h3>
             <p>
-              Once you get to this level (on a day there is a game) you can access subfolders for each game, various <b>.json</b> files and various <b>.xml</b> files.  The syntax for the subfolders are potentially the trickiest items to figure out how to properly run a routine to obtain data from them.  That syntax is as follows:
+              We will now look at what I've been calling the Date Level Folder.  From here you can access the daily scoreboards in <b>.json</b> and <b>.xml</b> format.  There are also a few different types of scoreboards at this level:
+              <ul>
+                <li>master_scoreboard.(ext)</li>
+                <li>miniscoreboard.(ext)</li>
+                <li>scoreboard.(ext)</li>
+                <li>scoreboard_deviceName.xml</li>
+              </ul>
+              See the <a href="http://gd2.mlb.com/components/game/mlb/year_2014/month_07/day_30/"> July 30th, 2014 folder</a> for a complete listing.
+            </p>
+            <h3>Individual Game Folders (GID)</h3>
+            <p>
+              Once you get to this level (on a day there is a game) you can access subfolders for each individual game.  These subfolders are pre-fixed with "gid", so I will refer to these as the GID folders.  The syntax for the subfolders are potentially the trickiest items to figure out how to properly run a routine to obtain data from them.  That syntax is as follows:
             </p>
             <pre><code>gid_YYYY_MM_DD_XXXmlb_YYYmlb_1/</code></pre>
             <p>Where XXX and YYY are the static 3-letter codes for each team.<br>Ex: Seattle = sea.</p>
-            <!-- <blockquote>
-              <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-            </blockquote> -->
+            <p>In the case of the MLB At Bat app, or a similar item you may want to build, you would have each Scoreboard item act as a link.  Clicking the link would be able to build a URL that is constructed of each team code.  That would then allow a request to the GID folder for that game.</p>
+            <p>
+              There is a lot of interesting information that can be obtained here.  One file of great note would be the <a href="http://gd2.mlb.com/components/game/mlb/year_2014/month_07/day_30/gid_2014_07_30_seamlb_clemlb_1/inning/inning_1.xml">inning_X.json/xml</a> files located within the <code>inning/</code> directory.  This contains an account of every pitch and play broken down by inning.  You will see that file shows the result of each play and even the physics of each pitch.
+            </p>
+            <p>
+              Again, accessing this data is based on continuing to builg the URL to get down to each .json or.xml file.
+            </p>
           </div><!-- /.blog-post -->
           <nav>
             <ul class="pager">
@@ -74,8 +84,8 @@
           <div class="sidebar-module">
             <h4>Sections</h4>
             <ol class="list-unstyled">
+              <li><a href="index.html">Home: About the API</a></li>
               <li><a href="section1.html">Section 1: The Structure of the API Data</a></li>
-              <li><a href="section2.html">Section 2: The Date Level Folder</a></li>
               <li><a href="section3.html">Section 3: The Scoreboard JSONs</a></li>
               <li><a href="section4.html">Section 4: Accessing the Scoreboard Data Using Javascript</a></li>
               <li><a href="example.html">Section 5: A Scoreboard Example Using Javascript</a></li>

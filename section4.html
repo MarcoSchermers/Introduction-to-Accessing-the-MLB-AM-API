@@ -30,52 +30,157 @@
       <div class="container">
         <nav class="blog-nav">
           <a class="blog-nav-item active" href="index.html">Home</a>
-          <a class="blog-nav-item" href="#">About</a>
         </nav>
       </div>
     </div>
     <div class="container">
       <div class="blog-header">
-        <h1 class="blog-title">Introduction to Accessing the MLBAM API</h1>
-        <p class="lead blog-description">by Micheal Willard</p>
+        <!-- <h1 class="blog-title">Introduction to Accessing the MLBAM API</h1>
+        <p class="lead blog-description">by Micheal Willard</p> -->
       </div>
       <div class="row">
         <div class="col-sm-8 blog-main">
           <div class="blog-post">
-            <h2 class="blog-post-title">Section 1: The API Structure</h2>
+            <h2 class="blog-post-title">Section 4: Accessing the Scoreboard Data Using Javascript</h2>
             <hr>
-            <p>The base URL is:</p>
-            <pre><code>http://gd2.mlb.com/components/game/mlb/</code></pre>
-            <p>If you visit this <a href="http://gd2.mlb.com/components/game/mlb/">link</a> you can view the structure set up as series of URL links laid out in a folder hierarchy.
-            </p>
+            <h3>Making the AJAX Call</h3>
             <p>
-              The basic structure begins with the base URL and then trees down first by year, then month then date.  The format is similar to the following:
-            </p>
-            <p>
-              <li><code>year_YYYY/</code></li>
-                <ul>
-                  <li><code>month_MM/</code></li>
-                  <ul>
-                    <li><code>day_DD/</code></li>
-                  </ul>
-                </ul>
-                <pre><code>
-                  http://gd2.mlb.com/components/game/mlb/year_YYYY/month_MM/day_DD/
-                </code></pre>
-            </p>
-            <p>
-              Once you get to this level (on a day there is a game) you can access subfolders for each game, various <b>.json</b> files and various <b>.xml</b> files.  The syntax for the subfolders are potentially the trickiest items to figure out how to properly run a routine to obtain data from them.  That syntax is as follows:
-            </p>
-            <pre><code>gid_YYYY_MM_DD_XXXmlb_YYYmlb_1/</code></pre>
-            <p>Where XXX and YYY are the static 3-letter codes for each team.<br>Ex: Seattle = sea.</p>
+              I'm now going to walk through the code that will generate a very simplistic scoreboard for a <b>selected day</b> that is built off of the <b>minscoreboard.json</b> data.  Let's assume we are going to access the Day Level Folder using Javascript and an AJAX call (the method for PHP is very similar).  The first thing we will need is a function for making the AJAX call to the API.  The <code>getScores()</code> function is triggered by an HTML submit button.
+          </p>
+          <pre><code>function getScores() {
+            var emptyNode = document.getElementById('scoreboard');
+            emptyNode.innerHTML = '';
+            var req = new XMLHttpRequest();
+            if(!req) {
+              throw 'Unable to create HttpRequest.';
+            }
+            var yearSelect = document.getElementsByName('year')[0].value;
+            var monthSelect = document.getElementsByName('month')[0].value;
+            var daySelect = document.getElementsByName('day')[0].value;
+            var url = 'http://gd2.mlb.com/components/game/mlb/';
+            url += 'year_' + yearSelect + '/month_' + monthSelect + '/day_' + daySelect + '/miniscoreboard.json';
+            req.onreadystatechange = function() {
+              if(this.readyState === 4) {
+                if(this.status === 200) {
+                  var response = JSON.parse(this.responseText);
+                  createScoreboard(document.getElementById('scoreboard'), response);
+                }
+              }
+            };
+            req.open('GET', url);
+            req.send();
+          }
+        </code></pre>
+        <p>
+          The <code>yearSelect</code>, <code>monthSelect</code>, <code>daySelect</code> can be variables input by the user through an HTML form or another method.  We can see the base URL at <code>url = 'http://gd2.mlb.com/components/game/mlb/';</code>.  The URL the concatenates the year, month, day and <b>miniscoreboard.json</b> filename.</p>
+          <p> Next, we parse the JSON we have received with: <pre><code>var response = JSON.parse(this.responseText);</code></pre>  Finally, a function is called to handle the return value: <pre><code>createScoreboard(document.getElementById('scoreboard'), response);</code></pre>
+        </p>
+        <h3>Making a Game Object</h3>
+        <p>
+          Taking an Object Oriented approach, we can simplify the process of outputting the scoreboard data.  So let's create and Object called <b>Game</b> which will represent each game that day.
+        </p>
+        <pre><code>function Game() {
+          this.homeTeam = '';
+          this.awayTeam = '';
+          this.homeScore = '';
+          this.awayScore = '';
+          // Setters
+          this.setHomeTeam = function(homeTeam) {
+            this.homeTeam = homeTeam;
+          };
+          this.setAwayTeam = function(awayTeam) {
+            this.awayTeam = awayTeam;
+          };
+          this.setHomeScore = function(homeScore) {
+            this.homeScore = homeScore;
+          };
+          this.setAwayScore = function(awayScore) {
+            this.awayScore = awayScore;
+          };
+          // Getters
+          this.getHomeTeam = function(homeTeam) {
+            return this.homeTeam;
+          };
+          this.getAwayTeam = function(awayTeam) {
+            return this.awayTeam;
+          };
+          this.getHomeScore = function(homeScore) {
+            return this.homeScore;
+          };
+          this.getAwayScore = function(awayScore) {
+            return this.awayScore;
+          };
+        }</code></pre>
+        <h3>Populate the Object</h3>
+        <p>
+          The Game Objects will need to be populated.  We have called the <code>createScoreboard()</code> function within the <code>getScores()</code> function.  This function takes the 2 parameters:
+          <ul>
+           <li><code>scoreTable</code> is an HTML element where the scoreboard will be displayed.</li>
+            <li><code>response</code> is the parse JSON responseText we received.</li>
+          </ul>
+          We set the <b>obj</b> variable to step down the tiers of attributes we saw in Section 3.  Then all that is needed is to call a for-in loop to grab each attribute we are looking for and set the value using the <b>Setter</b> functions in the Game Object.  FInally, <code>tableObject()</code> is called to place the new Game object into an HTML Table Element.
+        </p>
+        <pre><code>function createScoreboard(scoreTable, response) {
+          var obj = response.data.games.game;
+          for (var key in obj) {
+              var tempItem = new Game();
+              tempItem.setHomeTeam(obj[key].home_team_name);
+              tempItem.setAwayTeam(obj[key].away_team_name);
+              tempItem.setHomeScore(obj[key].home_team_runs);
+              tempItem.setAwayScore(obj[key].away_team_runs);
+              tableObject(scoreTable, tempItem);
+          }
+        }</code></pre>
+        <h3>Building Table Elements</h3>
+        <p>
+          I won't go into too much detail on the <code>tableObject()</code> as it is pretty specific to this application.  What it does though is utilize the <b>Getter</b> functions to create HTML Table Elements and populate them with the Game Object data.
+        </p>
+        <pre><code>function tableObject(scoreTable, tempItem) {
+          var newTable = document.createElement('table');
+          var tblBody = document.createElement('tbody');
+
+          // Build the Away Team Name and Score
+          var row1 = document.createElement('tr');
+
+          var th1 = document.createElement('th');
+          var th1Text = document.createTextNode(tempItem.getAwayTeam());
+          th1.appendChild(th1Text);
+          row1.appendChild(th1);
+
+          var td1 = document.createElement('td');
+          var td1Text = document.createTextNode(tempItem.getAwayScore());
+          td1.appendChild(td1Text);
+          row1.appendChild(td1);
+          tblBody.appendChild(row1);
+
+          // Build the Home Team Name and Score
+          var row2 = document.createElement('tr');
+
+          var th2 = document.createElement('th');
+          var th2Text = document.createTextNode(tempItem.getHomeTeam());
+          th2.appendChild(th2Text);
+          row2.appendChild(th2);
+
+          var td2 = document.createElement('td');
+          var td2Text = document.createTextNode(tempItem.getHomeScore());
+          td2.appendChild(td2Text);
+          row2.appendChild(td2);
+          tblBody.appendChild(row2);
+
+          newTable.appendChild(tblBody);
+          scoreTable.appendChild(newTable);
+          newTable.setAttribute("class", "table table-bordered");
+        }</code></pre>
+        <h2>Click "Next" to Demo the Code!</h2>
+
             <!-- <blockquote>
               <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
             </blockquote> -->
           </div><!-- /.blog-post -->
           <nav>
             <ul class="pager">
-              <li><a href="index.html">Previous</a></li>
-              <li><a href="section2.html">Next</a></li>
+              <li><a href="section3.html">Previous</a></li>
+              <li><a href="example.html">Next</a></li>
             </ul>
           </nav>
 
@@ -92,7 +197,6 @@
               <li><a href="section1.html">Section 1: The Structure of the API Data</a></li>
               <li><a href="section2.html">Section 2: The Date Level Folder</a></li>
               <li><a href="section3.html">Section 3: The Scoreboard JSONs</a></li>
-              <li><a href="section4.html">Section 4: Accessing the Scoreboard Data Using Javascript</a></li>
               <li><a href="example.html">Section 5: A Scoreboard Example Using Javascript</a></li>
             </ol>
           </div>

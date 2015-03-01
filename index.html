@@ -30,7 +30,6 @@
       <div class="container">
         <nav class="blog-nav">
           <a class="blog-nav-item active" href="index.html">Home</a>
-          <a class="blog-nav-item" href="#">About</a>
         </nav>
       </div>
     </div>
@@ -45,46 +44,35 @@
             <h2 class="blog-post-title">About the API</h2>
             <hr>
             <p>
-              MLB Advanced Media provides an open and accesible API which tracks all the dtata and statistics of each game played going back to 1909.  The API also stores data which feeds into the MLB Gameday Application as well as the MLB websites.  The information accessed form the API in those applications also includes links to video feeds, highlights and other items in addition to statistics.
+              MLB Advanced Media provides an open and accesible API which contains stats, data and related information of each game played going back to 1909.  The data stored in this API feeds into the MLB At Bat Application as well as the MLB websites.
+            </p>
+            <p>
+                The information accessed from the API in those applications also includes links to video feeds, highlights, news and other items in addition to statistics.
             </p>
             <p>
               This How-To will walk the you through the following items:
             </p>
             <p>
               <ul>
-                <li>Section 1: The API Structure</li>
-                <li>Section 2: The Date Level Folder</li>
-                <li>Section 3: The Scoreboard JSONs</li>
-                <li>Section 4: Accessing the Scoreboard Data Using Javascript</li>
-                <li>Section 5: A Scoreboard Example Using Javascript</li>
+                <li><a href="section1.html">Section 1: The API Structure</a></li>
+                <li><a href="section2.html">Section 2: The Date Level Folder</a></li>
+                <li><a href="section3.html">Section 3: The Scoreboard JSONs</a></li>
+                <li><a href="section4.html">Section 4: Accessing the Scoreboard Data Using Javascript</a></li>
+                <li><a href="example.html">Section 5: A Scoreboard Example Using Javascript</a></li>
               </ul>
-            <p>The MLB AM API can be accessed through this base URL is:</p>
-            <pre><code>http://gd2.mlb.com/components/game/mlb/</code></pre>
-            <p>If you visit this <a href="http://gd2.mlb.com/components/game/mlb/">the MLB AM API URL</a> you can view the structure set up as series of URL links laid out in a folder hierarchy.
+              <p>
+                It is important to keep in mind that the API focuses on accessing data based on the date and the game played.  This can be visualized by looking at the way the MLB At Bat App is laid out.  In the image below you can see how the app is paged on a date and lists out all the scores for that date.  Clicking on a score will open the stats for that game.
+              </p>
+              <img src="images/AtBatApp.png" alt="Scoreboard view for the MLB At Bat App" width="263" height="465" />
+            <p>The MLB AM API can be accessed through a base URL:</p>
+            <pre><code>
+              http://gd2.mlb.com/components/game/mlb/
+            </code></pre>
+            <p>If you visit <a href="http://gd2.mlb.com/components/game/mlb/">the MLB AM API URL</a> you can view the structure set up as series of URL links laid out in a folder hierarchy.  You can also visit the <a href="http://gd2.mlb.com/components/game/mlb/year_2015/month_03/day_04/">Date Level Folder</a> for the above image to get a better idea of how the data translates to the posted image.
             </p>
             <p>
-              The basic structure begins with the base URL and then trees down first by year, then month then date.  The format is similar to the following:
+              I strongly recommend visiting those link and getting a feel for the tiers and drilling down to see just how much data is available and where it is at.  There is simply too much data to cover it all here, but if there is something specific you are wanting to access, poking around the API will be the quickest route to finding it.
             </p>
-            <p>
-              <li><code>year_YYYY/</code></li>
-                <ul>
-                  <li><code>month_MM/</code></li>
-                  <ul>
-                    <li><code>day_DD/</code></li>
-                  </ul>
-                </ul>
-                <pre><code>
-                  http://gd2.mlb.com/components/game/mlb/year_YYYY/month_MM/day_DD/
-                </code></pre>
-            </p>
-            <p>
-              Once you get to this level (on a day there is a game) you can access subfolders for each game, various <b>.json</b> files and various <b>.xml</b> files.  The syntax for the subfolders are potentially the trickiest items to figure out how to properly run a routine to obtain data from them.  That syntax is as follows:
-            </p>
-            <pre><code>gid_YYYY_MM_DD_XXXmlb_YYYmlb_1/</code></pre>
-            <p>Where XXX and YYY are the static 3-letter codes for each team.<br>Ex: Seattle = sea.</p>
-            <!-- <blockquote>
-              <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-            </blockquote> -->
           </div><!-- /.blog-post -->
           <nav>
             <ul class="pager">
